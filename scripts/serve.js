@@ -1,22 +1,20 @@
 // Gets called when running npm start
 
-var path = require('path');
-var express = require('express');
-var ip = require('ip');
-var opener = require("opener");
+const express = require('express');
+const ip = require('ip');
 
-var app = express();
+const app = express();
 
-var PROD = process.env.NODE_ENV === 'production';
+const PROD = process.env.NODE_ENV === 'production';
 
 if (PROD) {
   app.use(express.static('dist'));
 } else {
-  var webpack = require('webpack');
-  var config = require('../webpack.config');
-  var ProgressPlugin = require('webpack/lib/ProgressPlugin');
-  var compiler = webpack(config);
-  compiler.apply(new ProgressPlugin(function(percentage, msg) {
+  const webpack = require('webpack');
+  const config = require('../webpack.config');
+  const ProgressPlugin = require('webpack/lib/ProgressPlugin');
+  const compiler = webpack(config);
+  compiler.apply(new ProgressPlugin((percentage, msg) => {
     process.stdout.write(`  ${msg} ${(percentage * 100).toFixed(0)}%\r`);
   }));
 
@@ -38,12 +36,12 @@ if (PROD) {
   app.use(require('webpack-hot-middleware')(compiler));
 }
 
-app.listen(3000, '0.0.0.0', function(err) {
+app.listen(3000, '0.0.0.0', (err) => {
   if (err) {
-    console.log(err);
+    process.stdout.writeln(err);
   } else {
-    console.log('Server started');
-    console.log('Your app is available at http://' + ip.address() + ':3000 on any device in your local network!');
+    process.stdout.writeln('Server started');
+    process.stdout.writeln(`Your app is available at http://${ip.address()}:3000!`);
     opener(`http://${ip.address()}:3000`);
   }
 });
