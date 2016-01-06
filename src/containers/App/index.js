@@ -6,7 +6,7 @@ import style from './style.css'
 class App extends Component {
   render() {
     return (
-      <div className={style.normal}>
+      <div className='normal'>
         <Header/>
       </div>
     )
