@@ -12,6 +12,8 @@ if (PROD) {
     path.resolve(__dirname, 'src/index.jsx')
   ];
   plugins = [
+    new webpack.optimize.UglifyJsPlugin({compress: { warnings: false }}),
+    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.CommonsChunkPlugin({name: "vendor", minChunks: Infinity}),
     new HtmlWebpackPlugin({
@@ -69,7 +71,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader!postcss-loader'
+        loader: 'style-loader!css-loader'
       },
       {
         test: /\.(js|jsx)$/,
