@@ -1,7 +1,10 @@
+/* eslint no-console: 0 */
+'use strict';
 // Gets called when running npm start
 
 const express = require('express');
 const ip = require('ip');
+const openerpage = require('opener');
 
 const app = express();
 
@@ -38,10 +41,10 @@ if (PROD) {
 
 app.listen(3000, '0.0.0.0', (err) => {
   if (err) {
-    process.stdout.writeln(err);
+    console.log(err);
   } else {
-    process.stdout.writeln('Server started');
-    process.stdout.writeln(`Your app is available at http://${ip.address()}:3000!`);
-    opener(`http://${ip.address()}:3000`);
+    console.log('Server started');
+    console.log(`Your app is available at http://${ip.address()}:3000!`);
+    openerpage(`http://${ip.address()}:3000`);
   }
 });

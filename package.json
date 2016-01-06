@@ -11,7 +11,7 @@
     "start": "NODE_ENV=development node scripts/serve.js",
     "preserve": "npm run build",
     "serve": "NODE_ENV=production node scripts/serve.js",
-    "prebuild": "npm run clean",
+    "prebuild": "npm run clean -s && npm run lint -s",
     "build": "NODE_ENV=production webpack --config webpack.config.js --progress --colors -p"
   },
   "author": "",
