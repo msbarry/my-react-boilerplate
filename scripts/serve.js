@@ -4,7 +4,7 @@
 
 const express = require('express');
 const ip = require('ip');
-const openerpage = require('opener');
+const openepage = require('opener');
 
 const app = express();
 
@@ -45,6 +45,6 @@ app.listen(3000, '0.0.0.0', (err) => {
   } else {
     console.log('Server started');
     console.log(`Your app is available at http://${ip.address()}:3000!`);
-    openerpage(`http://${ip.address()}:3000`);
+    openepage(`http://${ip.address()}:3000`);
   }
 });
