@@ -9,11 +9,11 @@ var entry, plugins;
 
 if (PROD) {
   entry = [
-    path.resolve(__dirname, 'src/index.jsx') // Start with js/app.js...
+    path.resolve(__dirname, 'src/index.jsx')
   ];
   plugins = [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+    new webpack.optimize.CommonsChunkPlugin({name: "vendor", minChunks: Infinity}),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       minify: {
@@ -42,7 +42,7 @@ if (PROD) {
     path.resolve(__dirname, 'src/index.jsx')
   ];
   plugins = [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+    new webpack.optimize.CommonsChunkPlugin({name: "vendor", minChunks: Infinity}),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
@@ -54,12 +54,12 @@ if (PROD) {
 
 module.exports = {
   entry: {
-    entry: entry,
+    bundle: entry,
     vendor: ['react']
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: PROD ? "[name].[chunkhash].js" : "[name].js"
   },
   module: {
     loaders: [
