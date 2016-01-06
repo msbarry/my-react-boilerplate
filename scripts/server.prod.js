@@ -1,0 +1,20 @@
+// Gets called when running npm start
+
+var path = require('path');
+var express = require('express');
+var ip = require('ip');
+var opener = require("opener");
+
+var app = express();
+
+app.use(express.static('dist'));
+
+app.listen(3000, '0.0.0.0', function(err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Server started');
+    console.log('Your app is available at http://' + ip.address() + ':3000 on any device in your local network!');
+    opener(`http://${ip.address()}:3000`);
+  }
+});
