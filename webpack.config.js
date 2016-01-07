@@ -4,12 +4,14 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const PROD = process.env.NODE_ENV === 'production';
 
 let entry;
 let plugins;
 let cssLoaderParams;
+let cssLoaders;
 
 if (PROD) {
   entry = [
@@ -20,6 +22,10 @@ if (PROD) {
     'importLoaders=1',
     'localIdentName=[hash:base64:5]'
   ].join('&');
+  cssLoaders = ExtractTextPlugin.extract(
+    'style-loader',
+    `css-loader?${cssLoaderParams}!postcss-loader`
+  );
   plugins = [
     new webpack.optimize.UglifyJsPlugin({
       mangle: true,
@@ -47,6 +53,7 @@ if (PROD) {
       },
       inject: true
     }),
+    new ExtractTextPlugin('[name].[contenthash].css'),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production')
@@ -64,6 +71,7 @@ if (PROD) {
     'importLoaders=1',
     'localIdentName=[name]__[local]___[hash:base64:5]'
   ].join('&');
+  cssLoaders = `style-loader!css-loader?${cssLoaderParams}!postcss-loader`;
   plugins = [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
@@ -90,10 +98,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: [
-          'style-loader',
-          `css-loader?${cssLoaderParams}`
-        ]
+        loader: cssLoaders
       },
       {
         test: /\.(js|jsx)$/,
@@ -104,6 +109,22 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
+  },
+  postcss() {
+    return [
+      require('postcss-import')({
+        glob: true,
+        onImport: function onImport(files) {
+          files.forEach(this.addDependency);
+        }.bind(this)
+      }),
+      require('autoprefixer')({
+        browsers: ['last 2 versions', 'IE > 8']
+      }),
+      require('postcss-reporter')({
+        clearMessages: true
+      })
+    ];
   },
   plugins
 };

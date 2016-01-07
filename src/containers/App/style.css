@@ -1,3 +1,7 @@
+@import "normalize.css";
+
 .normal {
   color: blue;
+  background-color: red;
+  transform: translate(5px, 5px);
 }
