@@ -15,10 +15,16 @@ if (PROD) {
     path.resolve(__dirname, 'src/index.jsx'),
   ];
   plugins = [
-    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: true,
+      compress: {
+        drop_console: true,
+        unused: true,
+        evaluate: true,
+        warnings: false
+      }
+    }),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', minChunks: Infinity }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       minify: {
@@ -47,7 +53,6 @@ if (PROD) {
     path.resolve(__dirname, 'src/index.jsx')
   ];
   plugins = [
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', minChunks: Infinity }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
@@ -59,8 +64,7 @@ if (PROD) {
 
 module.exports = {
   entry: {
-    bundle: entry,
-    vendor: ['react']
+    bundle: entry
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

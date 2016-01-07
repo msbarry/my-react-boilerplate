@@ -1,4 +1,3 @@
-/* eslint no-console: 0 */
 'use strict';
 // Gets called when running npm start
 
