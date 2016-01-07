@@ -9,11 +9,17 @@ const PROD = process.env.NODE_ENV === 'production';
 
 let entry;
 let plugins;
+let cssLoaderParams;
 
 if (PROD) {
   entry = [
     path.resolve(__dirname, 'src/index.jsx'),
   ];
+  cssLoaderParams = [
+    'modules',
+    'importLoaders=1',
+    'localIdentName=[hash:base64:5]'
+  ].join('&');
   plugins = [
     new webpack.optimize.UglifyJsPlugin({
       mangle: true,
@@ -52,6 +58,12 @@ if (PROD) {
     'webpack-hot-middleware/client',
     path.resolve(__dirname, 'src/index.jsx')
   ];
+  cssLoaderParams = [
+    'modules',
+    'sourceMap',
+    'importLoaders=1',
+    'localIdentName=[name]__[local]___[hash:base64:5]'
+  ].join('&');
   plugins = [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
@@ -78,7 +90,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loaders: [
+          'style-loader',
+          `css-loader?${cssLoaderParams}`
+        ]
       },
       {
         test: /\.(js|jsx)$/,
