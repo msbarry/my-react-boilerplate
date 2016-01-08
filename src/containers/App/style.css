@@ -1,7 +1,7 @@
 @import "normalize.css";
 
 .normal {
-  color: blue;
-  background-color: red;
+  border: 1px solid gray;
+  border-radius: 1em;
   transform: translate(5px, 5px);
 }
