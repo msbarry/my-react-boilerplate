@@ -5,4 +5,7 @@
       "presets": ["react-hmre"]
     }
   }
+  "plugins": [
+    "babel-root-import"
+  ]
 }
