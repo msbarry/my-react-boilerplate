@@ -8,6 +8,7 @@ function newFixture() {
   document.body.innerHTML = '';
   const root = document.createElement('div');
   document.body.appendChild(root);
+  return root;
 }
 
 export default newFixture;
