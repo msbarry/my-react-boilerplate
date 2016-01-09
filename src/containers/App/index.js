@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import Header from '~/src/components/Header';
-import Counter from '~/src/components/Counter';
 import style from './style.css';
 
 class App extends Component {
@@ -23,14 +22,10 @@ class App extends Component {
   }
 
   render() {
-    const { counter } = this.state;
-    const increment = () => this.setState({ counter: counter + 1 });
-    const decrement = () => this.setState({ counter: counter - 1 });
-
     return (
       <div className={style.normal}>
         <Header/>
-        <Counter counter={counter} increment={increment} decrement={decrement}/>
+        {this.props.children}
       </div>
     );
   }
