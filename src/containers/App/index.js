@@ -8,6 +8,16 @@ import { connect } from 'react-redux';
 import * as CounterActions from '~/src/actions/counter';
 
 class App extends Component {
+  componentDidMount() {
+    this._interval = setInterval(() => {
+      this.props.increment();
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._interval);
+  }
+
   render() {
     return (
       <div className={style.normal}>
