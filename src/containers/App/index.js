@@ -3,24 +3,7 @@ import React, { Component } from 'react';
 import Header from '~/src/components/Header';
 import style from './style.css';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      counter: 0
-    };
-  }
-
-  componentDidMount() {
-    this._interval = setInterval(() => {
-      this.setState({ counter: this.state.counter + 1 });
-    }, 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this._interval);
-  }
-
+export default class App extends Component {
   render() {
     return (
       <div className={style.normal}>
@@ -30,5 +13,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
