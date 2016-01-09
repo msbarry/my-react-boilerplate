@@ -2,6 +2,7 @@
 import { replacePath } from 'redux-simple-router';
 import React, { Component, PropTypes } from 'react';
 import { increment, decrement } from '../../actions/counter';
+import { connect } from 'react-redux';
 
 class Counter extends Component {
   componentDidMount() {
@@ -41,4 +42,6 @@ Counter.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
-export default Counter;
+export default connect(
+  (state) => ({ counter: state.counter })
+)(Counter);

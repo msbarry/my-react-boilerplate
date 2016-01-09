@@ -12,7 +12,6 @@ import { Simulate } from 'react-addons-test-utils';
 import { Router, Route } from 'react-router';
 import createHistory from 'history/lib/createMemoryHistory';
 import { syncReduxAndRouter } from 'redux-simple-router';
-import { connect } from 'react-redux';
 
 describe('app', () => {
   it('should increment and decrement', () => {
@@ -20,15 +19,11 @@ describe('app', () => {
     const history = createHistory('/counter/0');
     syncReduxAndRouter(history, store);
 
-    const ConnectedCounter = connect(
-      (state) => ({ counter: state.counter })
-    )(Counter);
-
     render(
       <Provider store={store}>
         <Router history={history}>
           <Route path="/" component={App}>
-            <Route path="counter/:id" component={ConnectedCounter}/>
+            <Route path="counter/:id" component={Counter}/>
           </Route>
         </Router>
       </Provider>,

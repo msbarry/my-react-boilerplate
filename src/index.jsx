@@ -7,8 +7,7 @@ import Counter from './components/Counter';
 import { Router, Route, IndexRoute, Redirect } from 'react-router';
 import createHistory from 'history/lib/createHashHistory';
 import { Provider } from 'react-redux';
-const { syncReduxAndRouter } = require('redux-simple-router');
-import { connect } from 'react-redux';
+import { syncReduxAndRouter } from 'redux-simple-router';
 
 import App from './containers/App';
 import configureStore from './store';
@@ -19,12 +18,6 @@ const history = createHistory({
 });
 syncReduxAndRouter(history, store);
 
-
-const ConnectedCounter = connect(
-  (state) => ({ counter: state.counter })
-)(Counter);
-
-
 render(
   <Provider store={store}>
     <Router history={history}>
@@ -33,7 +26,7 @@ render(
         <Route path="bar" component={Bar}/>
         <Route path="bar/:id" component={Bar}/>
         <Redirect from="counter" to="counter/0"/>
-        <Route path="counter/:id" component={ConnectedCounter}/>
+        <Route path="counter/:id" component={Counter}/>
       </Route>
     </Router>
   </Provider>,
