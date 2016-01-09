@@ -12,6 +12,7 @@ let entry;
 let plugins;
 let cssLoaderParams;
 let cssLoaders;
+let devtool;
 
 if (PROD) {
   entry = [
@@ -61,8 +62,9 @@ if (PROD) {
     })
   ];
 } else {
+  devtool = 'source-map';
   entry = [
-    'webpack-hot-middleware/client',
+    'webpack-hot-middleware/client?reload=true',
     path.resolve(__dirname, 'src/index.jsx')
   ];
   cssLoaderParams = [
@@ -73,16 +75,19 @@ if (PROD) {
   ].join('&');
   cssLoaders = `style-loader!css-loader?${cssLoaderParams}!postcss-loader`;
   plugins = [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
-      inject: true
-    })
+      inject: true,
+      devServer: 3000
+    }),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
   ];
 }
 
 module.exports = {
+  devtool,
   entry: {
     bundle: entry
   },
